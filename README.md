@@ -1,0 +1,9 @@
+# APS
+As Atividades Práticas Supervisionadas (APS) são tarefas que os alunos devem realizar para atender às exigências do curso. Essas atividades podem incluir visitas à biblioteca, trabalhos em grupo ou individuais, resolução de exercícios supervisionados pelos professores, elaboração de trabalhos científicos e apresentação de seminários.
+
+# Proposta
+FAZER
+
+## Desenvolvimento
+
+FAZER
