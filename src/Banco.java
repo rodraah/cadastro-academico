@@ -4,6 +4,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import javax.swing.JOptionPane;
+
 class Banco {
 	private static Connection connection = null;
 	
@@ -12,19 +14,19 @@ class Banco {
 		String user = "root";
 		String pass = "mysql";
 		
-		System.out.println("Tentando conexão com o banco...");
+		System.out.println("Tentando conexï¿½o com o banco...");
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("Driver carregado.");
 			
 			connection = DriverManager.getConnection(url,user,pass);
-			System.out.println("Conexão estabelecida.");
+			System.out.println("Conexï¿½o estabelecida.");
 		} catch (ClassNotFoundException e) {
-			System.err.println("Falha na conexão com o banco");
+			System.err.println("Falha na conexï¿½o com o banco");
 			e.printStackTrace();
 			System.exit(1);
 		} catch (SQLException e) {
-			System.err.println("Banco não disponível");
+			System.err.println("Banco nï¿½o disponï¿½vel");
 			e.printStackTrace();
 			System.exit(1);
 		}
@@ -54,7 +56,11 @@ class Banco {
 			Statement st = connection.createStatement();
 			st.executeUpdate(query);
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if (e.getMessage().contains("Duplicate entry")){
+				JOptionPane.showMessageDialog(null, "Registro duplicado!", "ERRO", JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+			}
 		}
 	}
 }
