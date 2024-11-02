@@ -26,7 +26,7 @@ public class TelaCurso extends JDialog implements ActionListener {
 		setLayout(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		JLabel lblTitulo = new JLabel("Manuten��o de Cursos");
+		JLabel lblTitulo = new JLabel("Manutenção de Cursos");
 		lblTitulo.setFont(new Font("Calibri", 1, 18));
 		lblTitulo.setBounds(30,30,400,20);
 		this.add(lblTitulo);
@@ -41,7 +41,7 @@ public class TelaCurso extends JDialog implements ActionListener {
 		tf0.setBounds(200, 80, 100, 20);
 		this.add(tf0);
 		
-		JLabel lbl1 = new JLabel("C�digo do curso:");
+		JLabel lbl1 = new JLabel("Código do curso:");
 		lbl1.setBounds(30,110,200,15);
 		this.add(lbl1);
 
@@ -49,7 +49,7 @@ public class TelaCurso extends JDialog implements ActionListener {
 		tf1.setBounds(200,110, 100,20);
 		this.add(tf1);
 		
-		JLabel lbl2 = new JLabel("Carga Hor�ria:");
+		JLabel lbl2 = new JLabel("Carga Horária:");
 		lbl2.setBounds(30,140,200,15);
 		this.add(lbl2);
 
@@ -57,7 +57,7 @@ public class TelaCurso extends JDialog implements ActionListener {
 		tf2.setBounds(200,140, 100,20);
 		this.add(tf2);
 		
-		JLabel lbl3 = new JLabel("C�digo do Instituto:");
+		JLabel lbl3 = new JLabel("Código do Instituto:");
 		lbl3.setBounds(30,170,200,15);
 		this.add(lbl3);
 
@@ -74,8 +74,8 @@ public class TelaCurso extends JDialog implements ActionListener {
 		radioBacharel.setBounds(30,230,200,15);
 		this.add(radioBacharel);
 
-		JRadioButton radioGestao = new JRadioButton("Gest�o");
-		radioGestao.setActionCommand("Gest�o");
+		JRadioButton radioGestao = new JRadioButton("Gestão");
+		radioGestao.setActionCommand("Gestão");
 		radioGestao.setBounds(30,260,200,15);
 		this.add(radioGestao);
 
@@ -89,7 +89,7 @@ public class TelaCurso extends JDialog implements ActionListener {
 		gpRadio.add(radioGestao);
 		gpRadio.add(radioOutros);
 
-		// Bot�es
+		// Botões
 
 		btIncluir = new JButton("Incluir");
 		btIncluir.setBounds(40,350,125,40);

@@ -58,9 +58,9 @@ public class TelaLogin extends JFrame implements ActionListener {
 			} else {
 				if (tentativas < 2) {
 					tentativas += 1;
-					JOptionPane.showMessageDialog(this, String.format("O usuário ou senha digitados estão incorretos\nVocê ainda tem %d tentativas", 3-tentativas));
+					JOptionPane.showMessageDialog(this, String.format("O usuÃ¡rio ou senha digitados estÃ£o incorretos\nVocÃª ainda tem %d tentativas", 3-tentativas));
 				} else {
-					JOptionPane.showMessageDialog(this, "ERROUUUUU");
+					JOptionPane.showMessageDialog(this, "VocÃª atingiu o limite de tentativas.");
 					this.dispose();
 				}
 			}

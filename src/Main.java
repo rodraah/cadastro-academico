@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-import java.sql.*;
+import java.sql.Connection;
 
 public class Main {
 	static TelaPrincipal main;
@@ -17,6 +17,7 @@ public class Main {
 		
 		// APAGAR!
 		javax.swing.JFrame telaPrincipal = new TelaPrincipal(); telaPrincipal.setVisible(true);
+
 		//new TelaLogin().setVisible(true);
 	}
 }

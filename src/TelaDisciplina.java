@@ -22,14 +22,14 @@ public class TelaDisciplina extends JDialog implements ActionListener {
 		setLayout(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		JLabel lblTitulo = new JLabel("Manutenção de Disciplinas");
+		JLabel lblTitulo = new JLabel("ManutenÃ§Ã£o de Disciplinas");
 		lblTitulo.setFont(new Font("Calibri", 1, 18));
 		lblTitulo.setBounds(30,30,400,20);
 		this.add(lblTitulo);
 		
 		// Coluna 1
 
-		JLabel lbl1 = new JLabel("Cód da disciplina:");
+		JLabel lbl1 = new JLabel("CÃ³d da disciplina:");
 		lbl1.setBounds(30,80,200,15);
 		this.add(lbl1);
 
@@ -45,7 +45,7 @@ public class TelaDisciplina extends JDialog implements ActionListener {
 		tf2.setBounds(200,110, 100,20);
 		this.add(tf2);
 		
-		JLabel lbl3 = new JLabel("Carga horária:");
+		JLabel lbl3 = new JLabel("Carga horÃ¡ria:");
 		lbl3.setBounds(30,140,200,15);
 		this.add(lbl3);
 
@@ -95,7 +95,7 @@ public class TelaDisciplina extends JDialog implements ActionListener {
 		gpRadio.add(radio5);
 		gpRadio.add(radio6);
 
-		// Botões
+		// Botï¿½es
 
 		JButton btIncluir = new JButton("Incluir");
 		btIncluir.setBounds(40,400,150,40);

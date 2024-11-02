@@ -16,12 +16,12 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 	public TelaPrincipal() {
 		setSize(500,500);
 		setResizable(false);
-		setTitle("Sistema de Controle Acadêmico");
+		setTitle("Sistema de Controle AcadÃªmico");
 		this.getContentPane().setBackground(Color.LIGHT_GRAY);
 		
 		barraMenu = new JMenuBar();
 		menu1 = new JMenu("Cadastrar");
-		menu2 = new JMenu("Manutenção");
+		menu2 = new JMenu("ManutenÃ§Ã£o");
 		menu3 = new JMenu("Mostrar");
 		menu4 = new JMenu("Sair");
 

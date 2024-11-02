@@ -20,7 +20,7 @@ public class TelaProf extends JDialog implements ActionListener {
 		setLayout(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		JLabel lblTitulo = new JLabel("Manutenção de Professores");
+		JLabel lblTitulo = new JLabel("ManutenÃ§Ã£o de Professores");
 		lblTitulo.setFont(new Font("Calibri", 1, 18));
 		lblTitulo.setBounds(30,30,400,20);
 		this.add(lblTitulo);
@@ -43,7 +43,7 @@ public class TelaProf extends JDialog implements ActionListener {
 		tf2.setBounds(200,110, 100,20);
 		this.add(tf2);
 		
-		JLabel lbl3 = new JLabel("Endereço:");
+		JLabel lbl3 = new JLabel("EndereÃ§o:");
 		lbl3.setBounds(30,140,200,15);
 		this.add(lbl3);
 
@@ -59,7 +59,7 @@ public class TelaProf extends JDialog implements ActionListener {
 		tf4.setBounds(200,170, 100,20);
 		this.add(tf4);
 		
-		JLabel lbl5 = new JLabel("Especialização:");
+		JLabel lbl5 = new JLabel("EspecializaÃ§Ã£o:");
 		lbl5.setBounds(30,200,200,15);
 		this.add(lbl5);
 		
@@ -69,7 +69,7 @@ public class TelaProf extends JDialog implements ActionListener {
 		checkbox1.setBounds(30,230,120,15);
 		this.add(checkbox1);
 		
-		JCheckBox checkbox2 = new JCheckBox("Informática");
+		JCheckBox checkbox2 = new JCheckBox("InformÃ¡tica");
 		checkbox2.setBounds(150,230,120,15);
 		this.add(checkbox2);
 		
@@ -105,7 +105,7 @@ public class TelaProf extends JDialog implements ActionListener {
 		this.add(checkbox8);
 		
 	
-		// Botões
+		// Botï¿½es
 
 		JButton btIncluir = new JButton("Incluir");
 		btIncluir.setBounds(40,400,150,40);

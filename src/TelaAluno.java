@@ -24,14 +24,14 @@ public class TelaAluno extends JDialog implements ActionListener {
 		setLayout(null);
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		
-		JLabel lblTitulo = new JLabel("ManutenÁ„o de Alunos");
+		JLabel lblTitulo = new JLabel("Manuten√ß√£o de Alunos");
 		lblTitulo.setFont(new Font("Calibri", 1, 18));
 		lblTitulo.setBounds(30,30,400,20);
 		this.add(lblTitulo);
 		
 		// Coluna 1
 
-		JLabel lbl1 = new JLabel("MatrÌcula:");
+		JLabel lbl1 = new JLabel("Matr√≠cula:");
 		lbl1.setBounds(30,80,200,15);
 		this.add(lbl1);
 
@@ -55,7 +55,7 @@ public class TelaAluno extends JDialog implements ActionListener {
 		tf3.setBounds(200,140, 100,20);
 		this.add(tf3);
 		
-		JLabel lbl4 = new JLabel("CÛdigo do curso:");
+		JLabel lbl4 = new JLabel("C√≥digo do curso:");
 		lbl4.setBounds(30,170,200,15);
 		this.add(lbl4);
 
@@ -79,7 +79,7 @@ public class TelaAluno extends JDialog implements ActionListener {
 		tf6.setBounds(200,230, 100,20);
 		this.add(tf6);
 		
-		JLabel lbl7 = new JLabel("MÈdia:");
+		JLabel lbl7 = new JLabel("M√©dia:");
 		lbl7.setBounds(30,260,200,15);
 		this.add(lbl7);
 
@@ -110,7 +110,6 @@ public class TelaAluno extends JDialog implements ActionListener {
 				listaCurso.addElement(rsDisciplinas.getString("cod") + " - " + rsDisciplinas.getString("nome"));
 			}
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -118,7 +117,7 @@ public class TelaAluno extends JDialog implements ActionListener {
 		lista.setBounds(350, 110, 200,175);
 		this.add(lista);
 
-		// Botıes
+		// Bot√µes
 
 		JButton btIncluir = new JButton("Incluir");
 		btIncluir.setBounds(40,350,125,40);
