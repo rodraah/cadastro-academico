@@ -51,16 +51,18 @@ class Banco {
 		}
 	}
 	
-	public static void update(String query) {
+	public static boolean update(String query) {
 		try {
 			Statement st = connection.createStatement();
 			st.executeUpdate(query);
+			return true;
 		} catch (SQLException e) {
 			if (e.getMessage().contains("Duplicate entry")){
 				JOptionPane.showMessageDialog(null, "Registro duplicado!", "ERRO", JOptionPane.ERROR_MESSAGE);
 			} else {
 				e.printStackTrace();
 			}
+			return false;
 		}
 	}
 }

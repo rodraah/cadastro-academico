@@ -10,10 +10,13 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
 public class TelaAluno extends JDialog implements ActionListener {
 	JTextField tf1, tf2, tf3, tf4, tf5, tf6, tf8;
+	JButton btIncluir, btExcluir, btAlterar, btSair;
+	JList<String> lista;
 	JLabel tlMedia;
 
 	TelaAluno(JFrame parent, int codigo) {
@@ -113,36 +116,104 @@ public class TelaAluno extends JDialog implements ActionListener {
 			e.printStackTrace();
 		}
 
-		JList<String> lista = new JList<String>(listaCurso);
+		lista = new JList<String>(listaCurso);
 		lista.setBounds(350, 110, 200,175);
 		this.add(lista);
 
 		// Botões
 
-		JButton btIncluir = new JButton("Incluir");
+		btIncluir = new JButton("Incluir");
 		btIncluir.setBounds(40,350,125,40);
 		btIncluir.addActionListener(this);
 		this.add(btIncluir);
 
-		JButton btExcluir = new JButton("Excluir");
+		btExcluir = new JButton("Excluir");
 		btExcluir.setBounds(180,350,125,40);
 		btExcluir.addActionListener(this);
 		this.add(btExcluir);
 
-		JButton brAlterar = new JButton("Alterar");
-		brAlterar.setBounds(320,350,125,40);
-		brAlterar.addActionListener(this);
-		this.add(brAlterar);
+		btAlterar = new JButton("Alterar");
+		btAlterar.setBounds(320,350,125,40);
+		btAlterar.addActionListener(this);
+		this.add(btAlterar);
 		
-		JButton brSair = new JButton("Sair");
-		brSair.setBounds(460,350,125,40);
-		brSair.addActionListener(this);
-		this.add(brSair);
+		btSair = new JButton("Sair");
+		btSair.setBounds(460,350,125,40);
+		btSair.addActionListener(this);
+		this.add(btSair);
 	}
 	
 	public void actionPerformed(ActionEvent e) {		
 		if (e.getActionCommand().equals("Sair")) {
 			this.dispose();
+		}
+		if (e.getActionCommand().equals("Incluir")) {
+			String disciplina = lista.getSelectedValue();
+			String query = String.format(
+					"INSERT INTO aluno VALUES(\"%s\",\"%s\", \"%s\",\"%s\",\"%s\", \"%s\", \"%s\")", tf2.getText(),tf1.getText(),tf3.getText(),tf4.getText(),tf5.getText(), tf6.getText(), tf8.getText());
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Incluído!");
+				limpar();
+			}
+		} else if(e.getActionCommand().equals("Excluir")) {
+			if (preencherDoBanco()) {
+				btExcluir.setText("Confirmar");
+			}
+		} else if(e.getActionCommand().equals("Alterar")) {
+			if (preencherDoBanco()) {
+				btAlterar.setText("Confirmar");
+			}
+		} else if(e.getSource().equals(btExcluir)) {
+			String query = String.format("DELETE FROM aluno WHERE matricula = %s", tf1.getText());
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Excluído!");
+				btExcluir.setText("Excluir");
+				limpar();
+			}
+		} else if(e.getSource().equals(btAlterar)) {
+			String disciplina = lista.getSelectedValue();
+			String query = String.format(
+				"UPDATE aluno SET nome = \"%s\", dt_nasc = \"%s\", cod_curso = \"%s\", nota_np1 = \"%s\", nota_np2 = \"%s\", faltas = \"%s\" WHERE matricula = \"%s\"", tf2.getText(), tf3.getText(), tf4.getText(), tf5.getText(), tf6.getText(), tf8.getText(), tf1.getText());
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Alterado!");
+				btAlterar.setText("Alterar");
+				limpar();
+			}
+		}
+	}
+
+	public void limpar() {
+		tf1.setText("");
+		tf2.setText("");
+		tf3.setText("");
+		tf4.setText("");
+		tf5.setText("");
+		tf6.setText("");
+		tf8.setText("");
+		lista.clearSelection();
+	}
+
+	public boolean preencherDoBanco() {
+		String query = String.format("SELECT * FROM aluno WHERE matricula = %s", tf1.getText());
+		ResultSet rs = Banco.select(query);
+		try {
+			rs.next();
+			tf1.setText(rs.getString("matricula"));
+			tf2.setText(rs.getString("nome"));
+			tf3.setText(rs.getString("dt_nasc"));
+			tf4.setText(rs.getString("cod_curso"));
+			tf5.setText(rs.getString("nota_np1"));
+			tf6.setText(rs.getString("nota_np2"));
+			tf8.setText(rs.getString("faltas"));
+			return true;
+		} catch (SQLException e) {
+			String errorMessage = e.getMessage();
+			if (errorMessage.startsWith("Illegal operation on empty result set.")) {
+				JOptionPane.showMessageDialog(this, "Código " + tf1.getText() + " não encontrado", "ERRO", JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+			}
+			return false;
 		}
 	}
 }

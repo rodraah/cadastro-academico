@@ -133,18 +133,20 @@ public class TelaCurso extends JDialog implements ActionListener {
 			}
 		} else if(e.getSource().equals(btExcluir)) {
 			String query = String.format("DELETE FROM curso WHERE cod = %s", tf1.getText());
-			Banco.update(query);
-			JOptionPane.showMessageDialog(this, "Excluído!");
-			btExcluir.setText("Excluir");
-			limpar();
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Excluído!");
+				btExcluir.setText("Excluir");
+				limpar();
+			}
 		} else if(e.getSource().equals(btAlterar)) {
 			String tipoCurso = gpRadio.getSelection().getActionCommand();
 			String query = String.format(
 				"UPDATE curso SET nome = \"%s\", carga = \"%s\", cod_inst = \"%s\", tipo_curso = \"%s\" WHERE cod = %s", tf0.getText(), tf2.getText(), tf3.getText(), tipoCurso, tf1.getText());
-			Banco.update(query);
-			JOptionPane.showMessageDialog(this, "Alterado!");
-			btAlterar.setText("Alterar");
-			limpar();
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Alterado!");
+				btAlterar.setText("Alterar");
+				limpar();
+			}
 		}
 	}
 
