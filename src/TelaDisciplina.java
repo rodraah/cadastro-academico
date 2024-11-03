@@ -130,9 +130,10 @@ public class TelaDisciplina extends JDialog implements ActionListener {
 			String aulas = gpRadio.getSelection().getActionCommand();
 			String query = String.format(
 				"INSERT INTO disciplina VALUES(\"%s\", \"%s\", \"%s\", \"%s\")", tf1.getText(), tf2.getText(), tf3.getText(), aulas); 
-			Banco.update(query);
-			JOptionPane.showMessageDialog(this, "Incluído!");
-			limpar();
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Incluído!");
+				limpar();
+			}
 		} else if(e.getActionCommand().equals("Excluir")) {
 			if (preencherDoBanco()) {
 				btExcluir.setText("Confirmar");

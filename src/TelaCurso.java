@@ -120,9 +120,10 @@ public class TelaCurso extends JDialog implements ActionListener {
 			String tipoCurso = gpRadio.getSelection().getActionCommand();
 			String query = String.format(
 					"INSERT INTO curso VALUES(\"%s\",\"%s\", \"%s\",\"%s\",\"%s\")", tf0.getText(),tf1.getText(),tf2.getText(),tf3.getText(),tipoCurso);
-			Banco.update(query);
-			JOptionPane.showMessageDialog(this, "Incluído!");
-			limpar();
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Incluído!");
+				limpar();
+			}
 		} else if(e.getActionCommand().equals("Excluir")) {
 			if (preencherDoBanco()) {
 				btExcluir.setText("Confirmar");
