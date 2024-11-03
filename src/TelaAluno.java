@@ -71,6 +71,7 @@ public class TelaAluno extends JDialog implements ActionListener {
 		this.add(lbl5);
 
 		tf5 = new JTextField();
+		tf5.addActionListener(this);
 		tf5.setBounds(200,200, 100,20);
 		this.add(tf5);
 		
@@ -79,6 +80,7 @@ public class TelaAluno extends JDialog implements ActionListener {
 		this.add(lbl6);
 
 		tf6 = new JTextField();
+		tf6.addActionListener(this);
 		tf6.setBounds(200,230, 100,20);
 		this.add(tf6);
 		
@@ -188,6 +190,13 @@ public class TelaAluno extends JDialog implements ActionListener {
 				btAlterar.setText("Alterar");
 				limpar();
 			}
+		}
+
+		if (e.getSource().equals(tf5) || e.getSource().equals(tf6)) {
+			double np1=Double.parseDouble(tf5.getText());
+			double np2=Double.parseDouble(tf6.getText());
+			double media=(np1+np2)/2;
+			tlMedia.setText(Double.toString(media));
 		}
 	}
 
