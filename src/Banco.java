@@ -14,19 +14,19 @@ class Banco {
 		String user = "root";
 		String pass = "mysql";
 		
-		System.out.println("Tentando conex�o com o banco...");
+		System.out.println("Tentando conexão com o banco...");
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			System.out.println("Driver carregado.");
 			
 			connection = DriverManager.getConnection(url,user,pass);
-			System.out.println("Conex�o estabelecida.");
+			System.out.println("Conexão estabelecida.");
 		} catch (ClassNotFoundException e) {
-			System.err.println("Falha na conex�o com o banco");
+			System.err.println("Falha na conexão com o banco");
 			e.printStackTrace();
 			System.exit(1);
 		} catch (SQLException e) {
-			System.err.println("Banco n�o dispon�vel");
+			System.err.println("Banco não disponível");
 			e.printStackTrace();
 			System.exit(1);
 		}
