@@ -31,12 +31,13 @@ CREATE TABLE aluno(
 );
 
 CREATE TABLE professor(
-    nome varchar(40) NOT NULL,
     cod int(2) NOT NULL,
+    nome varchar(40) NOT NULL,
     endereco varchar(40),
     dt_nasc date,
     especializacao varchar(20),
-    titulo varchar(40)
+    titulo varchar(40),
+    PRIMARY KEY(cod)
 );
 
 INSERT INTO curso VALUES(
@@ -65,8 +66,8 @@ INSERT INTO aluno VALUES(
 );
 
 INSERT INTO professor VALUES(
-    "Marcos",
     1,
+    "Marcos",
     "Rua Asdrubal, 999",
     "1985-04-26",
     "Informática",

@@ -1,16 +1,22 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class TelaProf extends JDialog implements ActionListener {
 	JTextField tf1, tf2, tf3, tf4, tf5, tf6, tf7, tf8;
+	JButton btIncluir, btExcluir, btAlterar, btSair;
+	ButtonGroup gpRadio, gpRadio1;
 
 	TelaProf(JFrame parent) {
 		super(parent, "Cadastrar professor");
@@ -63,69 +69,159 @@ public class TelaProf extends JDialog implements ActionListener {
 		lbl5.setBounds(30,200,200,15);
 		this.add(lbl5);
 		
-		// Checkbox
+		// Radio
 		
-		JCheckBox checkbox1 = new JCheckBox("Direito");
-		checkbox1.setBounds(30,230,120,15);
-		this.add(checkbox1);
+		JRadioButton rb01 = new JRadioButton("Direito");
+		rb01.setActionCommand("Direito");
+		rb01.setBounds(30,230,120,15);
+		this.add(rb01);
 		
-		JCheckBox checkbox2 = new JCheckBox("Informática");
-		checkbox2.setBounds(150,230,120,15);
-		this.add(checkbox2);
+		JRadioButton rb02 = new JRadioButton("Informática");
+		rb02.setActionCommand("Informática");
+		rb02.setBounds(150,230,120,15);
+		this.add(rb02);
 		
-		JCheckBox checkbox3 = new JCheckBox("Matematica");
-		checkbox3.setBounds(30,260,120,15);
-		this.add(checkbox3);
+		JRadioButton rb03 = new JRadioButton("Matematica");
+		rb03.setActionCommand("Matematica");
+		rb03.setBounds(30,260,120,15);
+		this.add(rb03);
 		
-		JCheckBox checkbox4 = new JCheckBox("Medicina");
-		checkbox4.setBounds(150,260,120,15);
-		this.add(checkbox4);
+		JRadioButton rb04 = new JRadioButton("Medicina");
+		rb04.setActionCommand("Medicina");
+		rb04.setBounds(150,260,120,15);
+		this.add(rb04);
+		
+		gpRadio = new ButtonGroup();
+		gpRadio.add(rb01);
+		gpRadio.add(rb02);
+		gpRadio.add(rb03);
+		gpRadio.add(rb04);
 		
 		
+		// Radio 01
+
 		JLabel lbl6 = new JLabel("Titulo Professor:");
 		lbl6.setBounds(30,290,200,15);
 		this.add(lbl6);
 		
-		// Checkbox
+		JRadioButton rb05 = new JRadioButton("Bacharel");
+		rb05.setActionCommand("rb01");
+		rb05.setBounds(30,320,120,15);
+		this.add(rb05);
 		
-		JCheckBox checkbox5 = new JCheckBox("Bacharel");
-		checkbox5.setBounds(30,320,120,15);
-		this.add(checkbox5);
+		JRadioButton rb06 = new JRadioButton("Especialista Latu Sensu");
+		rb06.setActionCommand("rb02");
+		rb06.setBounds(150,320,170,15);
+		this.add(rb06);
 		
-		JCheckBox checkbox6 = new JCheckBox("Especialista Latu Sensu");
-		checkbox6.setBounds(150,320,170,15);
-		this.add(checkbox6);
+		JRadioButton rb07 = new JRadioButton("Mestrado");
+		rb07.setActionCommand("rb03");
+		rb07.setBounds(30,350,120,15);
+		this.add(rb07);
 		
-		JCheckBox checkbox7 = new JCheckBox("Mestrado");
-		checkbox7.setBounds(30,350,120,15);
-		this.add(checkbox7);
+		JRadioButton rb08 = new JRadioButton("Doutorado");
+		rb08.setActionCommand("rb04");
+		rb08.setBounds(150,350,120,15);
+		this.add(rb08);
 		
-		JCheckBox checkbox8 = new JCheckBox("Doutorado");
-		checkbox8.setBounds(150,350,120,15);
-		this.add(checkbox8);
-		
+		gpRadio1 = new ButtonGroup();
+		gpRadio1.add(rb05);
+		gpRadio1.add(rb06);
+		gpRadio1.add(rb07);
+		gpRadio1.add(rb08);
 	
-		// Bot�es
+		// Botões
 
-		JButton btIncluir = new JButton("Incluir");
-		btIncluir.setBounds(40,400,150,40);
+		btIncluir = new JButton("Incluir");
+		btIncluir.setBounds(40,400,125,40);
 		btIncluir.addActionListener(this);
 		this.add(btIncluir);
 
-		JButton btLimpar = new JButton("Limpar");
-		btLimpar.setBounds(220,400,150,40);
-		btLimpar.addActionListener(this);
-		this.add(btLimpar);
+		btExcluir = new JButton("Excluir");
+		btExcluir.setBounds(180,400,125,40);
+		btExcluir.addActionListener(this);
+		this.add(btExcluir);
 
-		JButton brSair = new JButton("Sair");
-		brSair.setBounds(400,400,150,40);
-		brSair.addActionListener(this);
-		this.add(brSair);
+		btAlterar = new JButton("Alterar");
+		btAlterar.setBounds(320,400,125,40);
+		btAlterar.addActionListener(this);
+		this.add(btAlterar);
+		
+		btSair = new JButton("Sair");
+		btSair.setBounds(460,400,125,40);
+		btSair.addActionListener(this);
+		this.add(btSair);
 	}
 	
 	public void actionPerformed(ActionEvent e) {		
 		if (e.getActionCommand().equals("Sair")) {
 			this.dispose();
+		}
+		if (e.getActionCommand().equals("Incluir")) {
+			String especializacao = gpRadio.getSelection().getActionCommand();
+			String titulo = gpRadio1.getSelection().getActionCommand();
+			String query = String.format(
+				"INSERT INTO professor VALUES (\"%s\", \"%s\", \"%s\", \"%s\", \"%s\", \"%s\")", tf1.getText(), tf2.getText(), tf3.getText(), tf4.getText(), especializacao, titulo);
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Incluído!");
+				limpar();
+			}
+		} else if(e.getActionCommand().equals("Excluir")) {
+			if (preencherDoBanco()) {
+				btExcluir.setText("Confirmar");
+			}
+		} else if(e.getActionCommand().equals("Alterar")) {
+			if (preencherDoBanco()) {
+				btAlterar.setText("Confirmar");
+			}
+		} else if(e.getSource().equals(btExcluir)) {
+			String query = String.format("DELETE FROM professor WHERE cod = %s", tf1.getText());
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Excluído!");
+				btExcluir.setText("Excluir");
+				limpar();
+			}
+		} else if(e.getSource().equals(btAlterar)) {
+			String especializacao = gpRadio.getSelection().getActionCommand();
+			String titulo = gpRadio1.getSelection().getActionCommand();
+			String query = String.format(
+				"UPDATE professor SET nome = \"%s\", endereco = \"%s\", dt_nasc = \"%s\", especializacao = \"%s\", titulo = \"%s\" WHERE cod = \"%s\"", tf2.getText(), tf3.getText(), tf4.getText(), especializacao, titulo, tf1.getText());
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Alterado!");
+				btAlterar.setText("Alterar");
+				limpar();
+			}
+		}
+	}
+
+	public void limpar() {
+		tf1.setText("");
+		tf2.setText("");
+		tf3.setText("");
+		tf4.setText("");
+		gpRadio.clearSelection();
+		gpRadio1.clearSelection();
+	}
+
+	public boolean preencherDoBanco() {
+		String query = String.format("SELECT * FROM professor WHERE cod = %s", tf1.getText());
+		ResultSet rs = Banco.select(query);
+		try {
+			rs.next();
+			tf2.setText(rs.getString("nome"));
+			tf3.setText(rs.getString("endereco"));
+			tf4.setText(rs.getString("dt_nasc"));
+			Utilitarios.setButtonGroup(rs.getString("especializacao"), gpRadio);
+			Utilitarios.setButtonGroup(rs.getString("titulo"), gpRadio1);
+			return true;
+		} catch (SQLException e) {
+			String errorMessage = e.getMessage();
+			if (errorMessage.startsWith("Illegal operation on empty result set.")) {
+				JOptionPane.showMessageDialog(this, "Código " + tf1.getText() + " não encontrado", "ERRO", JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+			}
+			return false;
 		}
 	}
 }
