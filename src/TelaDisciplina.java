@@ -1,17 +1,21 @@
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 public class TelaDisciplina extends JDialog implements ActionListener {
 	JTextField tf1, tf2, tf3;
+	JButton btIncluir, btExcluir, btAlterar, btSair;
 	ButtonGroup gpRadio;
 
 	TelaDisciplina(JFrame parent) {
@@ -95,32 +99,91 @@ public class TelaDisciplina extends JDialog implements ActionListener {
 		gpRadio.add(radio5);
 		gpRadio.add(radio6);
 
-		// Bot�es
+		// Botões
 
-		JButton btIncluir = new JButton("Incluir");
-		btIncluir.setBounds(40,400,150,40);
+		btIncluir = new JButton("Incluir");
+		btIncluir.setBounds(40,350,125,40);
 		btIncluir.addActionListener(this);
 		this.add(btIncluir);
 
-		JButton btLimpar = new JButton("Limpar");
-		btLimpar.setBounds(220,400,150,40);
-		btLimpar.addActionListener(this);
-		this.add(btLimpar);
+		btExcluir = new JButton("Excluir");
+		btExcluir.setBounds(180,350,125,40);
+		btExcluir.addActionListener(this);
+		this.add(btExcluir);
 
-		JButton brSair = new JButton("Sair");
-		brSair.setBounds(400,400,150,40);
-		brSair.addActionListener(this);
-		this.add(brSair);
+		btAlterar = new JButton("Alterar");
+		btAlterar.setBounds(320,350,125,40);
+		btAlterar.addActionListener(this);
+		this.add(btAlterar);
+		
+		btSair = new JButton("Sair");
+		btSair.setBounds(460,350,125,40);
+		btSair.addActionListener(this);
+		this.add(btSair);
 	}
 	
 	public void actionPerformed(ActionEvent e) {		
 		if (e.getActionCommand().equals("Sair")) {
 			this.dispose();
-		} else if (e.getActionCommand().equals("Incluir")) {
+		}
+		if (e.getActionCommand().equals("Incluir")) {
 			String aulas = gpRadio.getSelection().getActionCommand();
 			String query = String.format(
-				"INSERT INTO disciplina VALUES(\"%s\", \"%s\", \"%s\", \"%s\");", tf1.getText(), tf2.getText(), tf3.getText(), aulas);
+				"INSERT INTO disciplina VALUES(\"%s\", \"%s\", \"%s\", \"%s\")", tf1.getText(), tf2.getText(), tf3.getText(), aulas); 
 			Banco.update(query);
+			JOptionPane.showMessageDialog(this, "Incluído!");
+			limpar();
+		} else if(e.getActionCommand().equals("Excluir")) {
+			if (preencherDoBanco()) {
+				btExcluir.setText("Confirmar");
+			}
+		} else if(e.getActionCommand().equals("Alterar")) {
+			if (preencherDoBanco()) {
+				btAlterar.setText("Confirmar");
+			}
+		} else if(e.getSource().equals(btExcluir)) {
+			String query = String.format("DELETE FROM disciplina WHERE cod = %s", tf1.getText());
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Excluído!");
+				btExcluir.setText("Excluir");
+				limpar();
+			}
+		} else if(e.getSource().equals(btAlterar)) {
+			String aulas = gpRadio.getSelection().getActionCommand();
+			String query = String.format(
+				"UPDATE disciplina SET nome = \"%s\", carga = \"%s\", aulas_semana = \"%s\" WHERE cod = %s", tf2.getText(), tf3.getText(), aulas, tf1.getText());
+			if (Banco.update(query)) {
+				JOptionPane.showMessageDialog(this, "Alterado!");
+				btAlterar.setText("Alterar");
+				limpar();
+			}
+		}
+	}
+
+	public void limpar() {
+		tf1.setText("");
+		tf2.setText("");
+		tf3.setText("");
+		gpRadio.clearSelection();
+	}
+
+	public boolean preencherDoBanco() {
+		String query = String.format("SELECT * FROM disciplina WHERE cod = %s", tf1.getText());
+		ResultSet rs = Banco.select(query);
+		try {
+			rs.next();
+			tf2.setText(rs.getString("nome"));
+			tf3.setText(rs.getString("carga"));
+			Utilitarios.setButtonGroup(rs.getString("aulas_semana"), gpRadio);
+			return true;
+		} catch (SQLException e) {
+			String errorMessage = e.getMessage();
+			if (errorMessage.startsWith("Illegal operation on empty result set.")) {
+				JOptionPane.showMessageDialog(this, "Código " + tf1.getText() + " não encontrado", "ERRO", JOptionPane.ERROR_MESSAGE);
+			} else {
+				e.printStackTrace();
+			}
+			return false;
 		}
 	}
 }
