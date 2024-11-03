@@ -15,9 +15,6 @@ public class Main {
 	public static void main(String[] args) {		
 		conexao = Banco.obterConexao();
 		
-		// APAGAR!
-		javax.swing.JFrame telaPrincipal = new TelaPrincipal(); telaPrincipal.setVisible(true);
-
-		//new TelaLogin().setVisible(true);
+		new TelaLogin().setVisible(true);
 	}
 }
