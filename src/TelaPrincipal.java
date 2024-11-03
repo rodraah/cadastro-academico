@@ -90,14 +90,22 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 	public void actionPerformed(ActionEvent evento) {
 		if (evento.getActionCommand().equals("Sair")) {
 			this.dispose(); 
-		} else if (evento.getSource() == mn1 || evento.getSource() == mn5) {
-			new TelaCurso(this);
-		} else if (evento.getSource() == mn2 || evento.getSource() == mn6) {
-			new TelaDisciplina(this);
-		} else if (evento.getSource() == mn3 || evento.getSource() == mn7) {
+		} else if (evento.getSource() == mn1) {
+			new TelaCurso(this, 0);
+		} else if (evento.getSource() == mn5) {
+			new TelaCurso(this, 1);
+		} else if (evento.getSource() == mn2) {
+			new TelaDisciplina(this, 0);
+		} else if (evento.getSource() == mn6) {
+			new TelaDisciplina(this, 1);
+		} else if (evento.getSource() == mn3) {
 			new TelaAluno(this,0);
-		} else if (evento.getSource() == mn4 || evento.getSource() == mn8) {
-			new TelaProf(this);
+		} else if (evento.getSource() == mn7) {
+			new TelaAluno(this, 1);
+		} else if (evento.getSource() == mn4) {
+			new TelaProf(this, 0);
+		} else if (evento.getSource() == mn8) {
+			new TelaProf(this, 1);
 		} else if (evento.getActionCommand().equals("Curso")) {
 			JOptionPane.showMessageDialog(this, String.format("Cursos: \n%s", Main.cursos));
 		}else if (evento.getSource() instanceof JMenuItem) {

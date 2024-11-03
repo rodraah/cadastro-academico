@@ -141,6 +141,15 @@ public class TelaAluno extends JDialog implements ActionListener {
 		btSair.setBounds(460,350,125,40);
 		btSair.addActionListener(this);
 		this.add(btSair);
+
+		// Código - 1 para somente inclusão, 0 para modificação
+		if (codigo == 0) {
+			lblTitulo.setText("Cadastro de Alunos");
+			btExcluir.setVisible(false);
+			btAlterar.setVisible(false);
+		} else if (codigo == 1) {
+			btIncluir.setVisible(false);
+		}
 	}
 	
 	public void actionPerformed(ActionEvent e) {		
