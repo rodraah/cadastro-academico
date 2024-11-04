@@ -112,7 +112,7 @@ public class TelaAluno extends JDialog implements ActionListener {
 		
 		try {
 			while (rsDisciplinas.next()) {
-				listaCurso.addElement(rsDisciplinas.getString("cod") + " - " + rsDisciplinas.getString("nome"));
+				listaCurso.addElement(rsDisciplinas.getString("nome"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -159,12 +159,18 @@ public class TelaAluno extends JDialog implements ActionListener {
 			this.dispose();
 		}
 		if (e.getActionCommand().equals("Incluir")) {
-			String disciplina = lista.getSelectedValue();
-			String query = String.format(
-					"INSERT INTO aluno VALUES(\"%s\",\"%s\", \"%s\",\"%s\",\"%s\", \"%s\", \"%s\")", tf2.getText(),tf1.getText(),tf3.getText(),tf4.getText(),tf5.getText(), tf6.getText(), tf8.getText());
-			if (Banco.update(query)) {
-				JOptionPane.showMessageDialog(this, "Incluído!");
-				limpar();
+			try {
+				ResultSet rs1 = Banco.select(String.format("SELECT * FROM disciplina WHERE nome = \"%s\"", lista.getSelectedValue()));
+				rs1.next() ;
+				String codDisciplina = rs1.getString("cod");
+				String query = String.format(
+						"INSERT INTO aluno VALUES(\"%s\",\"%s\", \"%s\",\"%s\",\"%s\", \"%s\", \"%s\", \"%s\")", tf2.getText(),tf1.getText(),tf3.getText(),tf4.getText(),tf5.getText(), tf6.getText(), tf8.getText(), codDisciplina);
+				if (Banco.update(query)) {
+					JOptionPane.showMessageDialog(this, "Incluído!");
+					limpar();
+				}
+			} catch (SQLException error) {
+				error.printStackTrace();
 			}
 		} else if(e.getActionCommand().equals("Excluir")) {
 			if (preencherDoBanco()) {
@@ -182,13 +188,20 @@ public class TelaAluno extends JDialog implements ActionListener {
 				limpar();
 			}
 		} else if(e.getSource().equals(btAlterar)) {
-			String disciplina = lista.getSelectedValue();
-			String query = String.format(
-				"UPDATE aluno SET nome = \"%s\", dt_nasc = \"%s\", cod_curso = \"%s\", nota_np1 = \"%s\", nota_np2 = \"%s\", faltas = \"%s\" WHERE matricula = \"%s\"", tf2.getText(), tf3.getText(), tf4.getText(), tf5.getText(), tf6.getText(), tf8.getText(), tf1.getText());
-			if (Banco.update(query)) {
-				JOptionPane.showMessageDialog(this, "Alterado!");
-				btAlterar.setText("Alterar");
-				limpar();
+			try {
+				ResultSet rs1 = Banco.select(String.format("SELECT * FROM disciplina WHERE nome = \"%s\"", lista.getSelectedValue()));
+				rs1.next() ;
+				String codDisciplina = rs1.getString("cod");
+				lista.setSelectedValue(codDisciplina, true);
+				String query = String.format(
+					"UPDATE aluno SET nome = \"%s\", dt_nasc = \"%s\", cod_curso = \"%s\", nota_np1 = \"%s\", nota_np2 = \"%s\", faltas = \"%s\", cod_disciplina = \"%s\" WHERE matricula = \"%s\"", tf2.getText(), tf3.getText(), tf4.getText(), tf5.getText(), tf6.getText(), tf8.getText(), codDisciplina, tf1.getText());
+				if (Banco.update(query)) {
+					JOptionPane.showMessageDialog(this, "Alterado!");
+					btAlterar.setText("Alterar");
+					limpar();
+				}
+			} catch (SQLException error) {
+				error.printStackTrace();
 			}
 		}
 
@@ -212,7 +225,8 @@ public class TelaAluno extends JDialog implements ActionListener {
 	}
 
 	public boolean preencherDoBanco() {
-		String query = String.format("SELECT * FROM aluno WHERE matricula = %s", tf1.getText());
+		String query = String.format(
+			"SELECT matricula, aluno.nome, dt_nasc, cod_curso, nota_np1, nota_np2, faltas, disciplina.nome AS nome_disciplina FROM aluno INNER JOIN disciplina ON aluno.cod_disciplina = disciplina.cod WHERE matricula = %s", tf1.getText());
 		ResultSet rs = Banco.select(query);
 		try {
 			rs.next();
@@ -223,6 +237,9 @@ public class TelaAluno extends JDialog implements ActionListener {
 			tf5.setText(rs.getString("nota_np1"));
 			tf6.setText(rs.getString("nota_np2"));
 			tf8.setText(rs.getString("faltas"));
+			ResultSet rs1 = Banco.select(String.format("SELECT * FROM disciplina WHERE nome = \"%s\"", rs.getString("nome_disciplina")));
+			rs1.next() ; String disciplina = rs1.getString("nome");
+			lista.setSelectedValue(disciplina, true);
 			return true;
 		} catch (SQLException e) {
 			String errorMessage = e.getMessage();

@@ -27,6 +27,7 @@ CREATE TABLE aluno(
     nota_np1 DECIMAL(4,2),
     nota_np2 DECIMAL(4,2),
     faltas int(2),
+    cod_disciplina int(2),
     PRIMARY KEY(matricula)
 );
 
@@ -62,7 +63,8 @@ INSERT INTO aluno VALUES(
     1,
     10.0,
     9.5,
-    4
+    4,
+    1
 );
 
 INSERT INTO professor VALUES(
