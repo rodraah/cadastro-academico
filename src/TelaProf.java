@@ -105,22 +105,22 @@ public class TelaProf extends JDialog implements ActionListener {
 		this.add(lbl6);
 		
 		JRadioButton rb05 = new JRadioButton("Bacharel");
-		rb05.setActionCommand("rb01");
+		rb05.setActionCommand("Bacharel");
 		rb05.setBounds(30,320,120,15);
 		this.add(rb05);
 		
 		JRadioButton rb06 = new JRadioButton("Especialista Latu Sensu");
-		rb06.setActionCommand("rb02");
+		rb06.setActionCommand("Especialista Latu Sensu");
 		rb06.setBounds(150,320,170,15);
 		this.add(rb06);
 		
 		JRadioButton rb07 = new JRadioButton("Mestrado");
-		rb07.setActionCommand("rb03");
+		rb07.setActionCommand("Mestrado");
 		rb07.setBounds(30,350,120,15);
 		this.add(rb07);
 		
 		JRadioButton rb08 = new JRadioButton("Doutorado");
-		rb08.setActionCommand("rb04");
+		rb08.setActionCommand("Doutorado");
 		rb08.setBounds(150,350,120,15);
 		this.add(rb08);
 		
