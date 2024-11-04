@@ -98,54 +98,60 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			new TelaProf(this, 1);
 		} else if (evento.getActionCommand().equals("Professores por Especialização")) {
 			String especializacao  = JOptionPane.showInputDialog("Digite a especialização: ");
-			String query = String.format(
-				"SELECT * FROM professor WHERE especializacao = \"%s\"", especializacao);
-			try {
-				ResultSet rs = Banco.select(query);
-				String resultado = "";
-				while (rs.next()) {
-					resultado += rs.getString("nome");
-					resultado += "\n";
+			if (especializacao != null) {
+				String query = String.format(
+					"SELECT * FROM professor WHERE especializacao = \"%s\"", especializacao);
+				try {
+					ResultSet rs = Banco.select(query);
+					String resultado = "";
+					while (rs.next()) {
+						resultado += rs.getString("nome");
+						resultado += "\n";
+					}
+					if (resultado.length() >= 1)
+						resultado = resultado.substring(0, resultado.length()-1);
+					JOptionPane.showMessageDialog(this, String.format("Professores com a especialização %s: \n%s", especializacao, resultado));
+				} catch (SQLException error) {
+					error.printStackTrace();
 				}
-				if (resultado.length() >= 1)
-					resultado = resultado.substring(0, resultado.length()-1);
-				JOptionPane.showMessageDialog(this, String.format("Professores com a especialização %s: \n%s", especializacao, resultado));
-			} catch (SQLException error) {
-				error.printStackTrace();
 			}
 		} else if (evento.getActionCommand().equals("Cursos por tipo")) {
 			String tipo  = JOptionPane.showInputDialog("Digite o tipo do curso: ");
-			String query = String.format(
-				"SELECT * FROM curso WHERE tipo_curso = \"%s\"", tipo);
-			try {
-				ResultSet rs = Banco.select(query);
-				String resultado = "";
-				while (rs.next()) {
-					resultado += rs.getString("nome");
-					resultado += "\n";
+			if (tipo != null) {
+				String query = String.format(
+					"SELECT * FROM curso WHERE tipo_curso = \"%s\"", tipo);
+				try {
+					ResultSet rs = Banco.select(query);
+					String resultado = "";
+					while (rs.next()) {
+						resultado += rs.getString("nome");
+						resultado += "\n";
+					}
+					if (resultado.length() >= 1)
+						resultado = resultado.substring(0, resultado.length()-1);
+					JOptionPane.showMessageDialog(this, String.format("Cursos com o tipo %s: \n%s", tipo, resultado));
+				} catch (SQLException error) {
+					error.printStackTrace();
 				}
-				if (resultado.length() >= 1)
-					resultado = resultado.substring(0, resultado.length()-1);
-				JOptionPane.showMessageDialog(this, String.format("Cursos com o tipo %s: \n%s", tipo, resultado));
-			} catch (SQLException error) {
-				error.printStackTrace();
 			}
 		} else if (evento.getActionCommand().equals("Alunos por disciplina")) {
 			String disciplina  = JOptionPane.showInputDialog("Digite o nome da disciplina: ");
-			String query = String.format(
-				"SELECT aluno.nome FROM aluno INNER JOIN disciplina ON aluno.cod_disciplina = disciplina.cod WHERE disciplina.nome = \"%s\"", disciplina);
-			try {
-				ResultSet rs = Banco.select(query);
-				String resultado = "";
-				while (rs.next()) {
-					resultado += rs.getString("nome");
-					resultado += "\n";
+			if (disciplina != null) {
+				String query = String.format(
+					"SELECT aluno.nome FROM aluno INNER JOIN disciplina ON aluno.cod_disciplina = disciplina.cod WHERE disciplina.nome = \"%s\"", disciplina);
+				try {
+					ResultSet rs = Banco.select(query);
+					String resultado = "";
+					while (rs.next()) {
+						resultado += rs.getString("nome");
+						resultado += "\n";
+					}
+					if (resultado.length() >= 1)
+						resultado = resultado.substring(0, resultado.length()-1);
+					JOptionPane.showMessageDialog(this, String.format("Alunos na disciplina de %s: \n%s", disciplina, resultado));
+				} catch (SQLException error) {
+					error.printStackTrace();
 				}
-				if (resultado.length() >= 1)
-					resultado = resultado.substring(0, resultado.length()-1);
-				JOptionPane.showMessageDialog(this, String.format("Alunos na disciplina de %s: \n%s", disciplina, resultado));
-			} catch (SQLException error) {
-				error.printStackTrace();
 			}
 		}
 	}
