@@ -1,12 +1,8 @@
-import java.util.ArrayList;
-import java.util.List;
-
 import java.sql.Connection;
 
 public class Main {
 	static TelaPrincipal main;
 
-	public static List<String> cursos = new ArrayList<String>();
 	public static Connection conexao;
 	
 	public static final String USUARIO_CERTO = "admin";
