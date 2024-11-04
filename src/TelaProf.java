@@ -154,7 +154,7 @@ public class TelaProf extends JDialog implements ActionListener {
 		
 		// Código - 1 para somente inclusão, 0 para modificação
 		if (codigo == 0) {
-			lblTitulo.setText("Cadastro de Alunos");
+			lblTitulo.setText("Cadastro de Professores");
 			btExcluir.setVisible(false);
 			btAlterar.setVisible(false);
 		} else if (codigo == 1) {

@@ -49,11 +49,26 @@ INSERT INTO curso VALUES(
     "Bacharel"
 );
 
+INSERT INTO curso VALUES(
+    "Administração",
+    2,
+    100,
+    1,
+    "Bacharel"
+);
+
 INSERT INTO disciplina VALUES(
     1,
     "ALPOO",
     60,
     2
+);
+
+INSERT INTO disciplina VALUES(
+    2,
+    "Ciências Sociais",
+    60,
+    1
 );
 
 INSERT INTO aluno VALUES(
@@ -67,11 +82,31 @@ INSERT INTO aluno VALUES(
     1
 );
 
+INSERT INTO aluno VALUES(
+    "Filipe Pimentel",
+    2,
+    "1995-02-15",
+    1,
+    8.0,
+    7.5,
+    2,
+    1
+);
+
 INSERT INTO professor VALUES(
     1,
     "Marcos",
     "Rua Asdrubal, 999",
     "1985-04-26",
+    "Informática",
+    "Mestrado"
+);
+
+INSERT INTO professor VALUES(
+    2,
+    "João",
+    "Rua Kleyton Rasta, 7070",
+    "1750-01-15",
     "Informática",
     "Mestrado"
 );

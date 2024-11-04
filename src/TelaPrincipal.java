@@ -1,6 +1,8 @@
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -51,28 +53,16 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 		menu2.add(mn7);
 		menu2.add(mn8);
 		
-		mn13 = new JMenuItem("Curso");
+		mn13 = new JMenuItem("Professores por Especialização");
 		mn13.addActionListener(this);
-		mn14 = new JMenuItem("Disciplina");
+		mn14 = new JMenuItem("Cursos por tipo");
 		mn14.addActionListener(this);
-		mn15 = new JMenuItem("Aluno");
+		mn15 = new JMenuItem("Alunos por disciplina");
 		mn15.addActionListener(this);
-		mn16 = new JMenuItem("Professor/Cursos/Professores");
-		mn16.addActionListener(this);
-		mn17 = new JMenuItem("Cursos/Disciplinas");
-		mn17.addActionListener(this);
-		mn18 = new JMenuItem("Professores/Disciplinas");
-		mn18.addActionListener(this);
-		mn19 = new JMenuItem("Aluno/Disciplina");
-		mn19.addActionListener(this);
+
 		menu3.add(mn13);
 		menu3.add(mn14);
 		menu3.add(mn15);
-		menu3.addSeparator();
-		menu3.add(mn16);
-		menu3.add(mn17);
-		menu3.add(mn18);
-		menu3.add(mn19);
 		
 		mn20 = new JMenuItem("Sair");
 		mn20.addActionListener(this);
@@ -106,10 +96,57 @@ public class TelaPrincipal extends JFrame implements ActionListener {
 			new TelaProf(this, 0);
 		} else if (evento.getSource() == mn8) {
 			new TelaProf(this, 1);
-		} else if (evento.getActionCommand().equals("Curso")) {
-			JOptionPane.showMessageDialog(this, String.format("Cursos: \n%s", Main.cursos));
-		}else if (evento.getSource() instanceof JMenuItem) {
-			JOptionPane.showMessageDialog(this, evento.getActionCommand());
+		} else if (evento.getActionCommand().equals("Professores por Especialização")) {
+			String especializacao  = JOptionPane.showInputDialog("Digite a especialização: ");
+			String query = String.format(
+				"SELECT * FROM professor WHERE especializacao = \"%s\"", especializacao);
+			try {
+				ResultSet rs = Banco.select(query);
+				String resultado = "";
+				while (rs.next()) {
+					resultado += rs.getString("nome");
+					resultado += "\n";
+				}
+				if (resultado.length() >= 1)
+					resultado = resultado.substring(0, resultado.length()-1);
+				JOptionPane.showMessageDialog(this, String.format("Professores com a especialização %s: \n%s", especializacao, resultado));
+			} catch (SQLException error) {
+				error.printStackTrace();
+			}
+		} else if (evento.getActionCommand().equals("Cursos por tipo")) {
+			String tipo  = JOptionPane.showInputDialog("Digite o tipo do curso: ");
+			String query = String.format(
+				"SELECT * FROM curso WHERE tipo_curso = \"%s\"", tipo);
+			try {
+				ResultSet rs = Banco.select(query);
+				String resultado = "";
+				while (rs.next()) {
+					resultado += rs.getString("nome");
+					resultado += "\n";
+				}
+				if (resultado.length() >= 1)
+					resultado = resultado.substring(0, resultado.length()-1);
+				JOptionPane.showMessageDialog(this, String.format("Cursos com o tipo %s: \n%s", tipo, resultado));
+			} catch (SQLException error) {
+				error.printStackTrace();
+			}
+		} else if (evento.getActionCommand().equals("Alunos por disciplina")) {
+			String disciplina  = JOptionPane.showInputDialog("Digite o nome da disciplina: ");
+			String query = String.format(
+				"SELECT aluno.nome FROM aluno INNER JOIN disciplina ON aluno.cod_disciplina = disciplina.cod WHERE disciplina.nome = \"%s\"", disciplina);
+			try {
+				ResultSet rs = Banco.select(query);
+				String resultado = "";
+				while (rs.next()) {
+					resultado += rs.getString("nome");
+					resultado += "\n";
+				}
+				if (resultado.length() >= 1)
+					resultado = resultado.substring(0, resultado.length()-1);
+				JOptionPane.showMessageDialog(this, String.format("Alunos na disciplina de %s: \n%s", disciplina, resultado));
+			} catch (SQLException error) {
+				error.printStackTrace();
+			}
 		}
 	}
 }
